@@ -1,0 +1,14 @@
+---
+title: "Book Title"
+date: null
+section: reviews
+type_label: BOOK REVIEW
+summary: "One sentence review summary."
+card_image: null
+author: "Book Author Name"          # the person who wrote the book being reviewed
+reviewer: "Bithues Editorial"        # the bithues pen name (see /content/authors/AUTHORS.md)
+genre_label: null
+rating: null
+featured: false
+draft: false
+---

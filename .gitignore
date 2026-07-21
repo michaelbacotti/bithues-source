@@ -1,0 +1,60 @@
+# Bithues source-of-truth repo
+# Tracks ONLY: content/ MD sources + bithues-may24/ build scripts + template + redirects.
+# Project root contains many other folders that are part of Mike's broader writing workflow
+# (Devertwebsite, books/, references/, scripts/, _archive/, _trash/, etc.)
+# — those are NOT bithues and stay out of this repo.
+
+# --- Rendered output (already git-tracked inside website/) ---
+website/
+
+# --- Sibling writing/reference projects (not bithues) ---
+Devertwebsite/
+books/
+references/
+scripts/
+memory/
+notes/
+_archive/
+_trash/
+
+# --- Root-level one-off fix scripts (not part of the regular pipeline) ---
+fix_*.py
+rebuild_*.py
+scrape_*.py
+
+# --- Project meta at root that doesn't belong here ---
+SOP.md
+markdown-rules.md
+
+# --- Backup files ---
+*.bak
+*~
+*.tmp
+
+# --- System / tooling noise ---
+.openclaw/
+.clawhub/
+.wrangler/
+.secrets/
+.DS_Store
+
+# --- Build artifacts in bithues-may24 ---
+# Track only the *.py scripts + _template.html + _redirects.
+# Everything else under bithues-may24/ is rendered HTML output.
+__pycache__/
+*.pyc
+*.pyo
+bithues-may24/node_modules/
+
+# Catch-all: hide everything under bithues-may24/ except what we explicitly allow.
+bithues-may24/*
+!bithues-may24/build.py
+!bithues-may24/gen_best_pages.py
+!bithues-may24/build_new_index.py
+!bithues-may24/cleanup_orphan_html.py
+!bithues-may24/fix_reviews.py
+!bithues-may24/fix_reviews_v2.py
+!bithues-may24/fix_thumbs.py
+!bithues-may24/analyze_words.py
+!bithues-may24/_template.html
+!bithues-may24/_redirects

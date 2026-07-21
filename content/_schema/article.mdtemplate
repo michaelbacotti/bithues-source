@@ -1,0 +1,12 @@
+---
+title: "Article Title"
+date: null
+section: articles
+type_label: ARTICLE
+summary: "One sentence summary for card display."
+card_image: null
+author: "Bithues Editorial"          # the bithues pen name (see /content/authors/AUTHORS.md)
+tags: []
+featured: false
+draft: false
+---

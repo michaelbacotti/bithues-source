@@ -1,0 +1,122 @@
+# ============================================================
+# BITHUES — Legacy .html → Clean URL Redirects
+# Fixes: 21 "Page with redirect" GSC errors + prevents duplicate content
+# ============================================================
+
+# ── Host normalization: force www → bare (canonical host) ──
+# Canonical tags and sitemap both point at https://bithues.com/ (bare).
+# Without this, Google sees www.bithues.com as a duplicate and picks it as
+# the canonical, mismatching our declared canonical. 301 the www version
+# to bare on every URL.
+https://www.bithues.com/* https://bithues.com/:splat 301!
+
+# ── Root-level static pages ──
+# These pages are still .html files (build.py outputs them that way)
+# Redirect to clean URL equivalents (with trailing slash)
+# CF Pages will serve about.html at /about, so we redirect to canonical /about/
+
+# ── Section listing pages (now directories) ──
+# articles.html → /articles/
+# reviews.html → /reviews/
+# stories.html → /stories/
+/articles.html /articles/ 301
+/reviews.html /reviews/ 301
+/stories.html /stories/ 301
+
+# ── Paginated listing pages ──
+/articles2.html /articles/ 301
+/articles3.html /articles/ 301
+/articles4.html /articles/ 301
+/articles5.html /articles/ 301
+/articles6.html /articles/ 301
+/reviews2.html /reviews/ 301
+/reviews3.html /reviews/ 301
+/reviews4.html /reviews/ 301
+/reviews5.html /reviews/ 301
+/stories2.html /stories/ 301
+/stories3.html /stories/ 301
+/stories4.html /stories/ 301
+/stories5.html /stories/ 301
+
+# ── Individual content pages ──
+# Story pages at root level: /slug.html → /slug/
+# (now migrated to /slug/index.html — CF Pages handles automatically)
+/heliostat.html /heliostat/ 301
+/the-borrowed-life.html /the-borrowed-life/ 301
+/the-door-between-worlds.html /the-door-between-worlds/ 301
+/the-last-song.html /the-last-song/ 301
+# ... all other story .html files also redirect to their /slug/ equivalents
+
+# Article pages in /articles/: /articles/slug.html → /articles/slug/
+# CF Pages handles this automatically when the .html file is gone
+# but we add explicit rules for any remaining orphan .html files
+
+# Review pages in /reviews/: /reviews/slug.html → /reviews/slug/
+# Same pattern
+
+# ── Trailing slash normalization (2026-07-06) ──
+# CF Pages default serves /articles as 308 → /articles/. Google treats 308
+# as a soft redirect and flags these as "Page with redirect" in GSC. The
+# loop previously attributed to these rules was actually a separate bug
+# (a wildcard rule matching itself). Tested 2026-07-06 with /strategies →
+# 301 → /strategies/ on dependability.us; pattern works. Apply here.
+/articles       /articles/       301
+/stories        /stories/        301
+/reviews        /reviews/        301
+/book-match     /book-match/     301
+/about          /about/          301
+/contact        /contact/        301
+/privacy        /privacy/        301
+/collections    /collections/    301
+
+# ── Apostrophe slug safety net (2026-07-06) ──
+# The apostrophe articles (children's) have their no-apostrophe variants
+# returning 404. Older sitemaps / inbound links may have seeded Google on
+# the no-apostrophe path. 301 to the working apostrophe URL so Google
+# stops flagging these as duplicate-with-different-canonical.
+# Use wildcards (%27 is literal in destination; wildcard handles the
+# apostrophe without CF parser confusion).
+/articles/eric-carle-classic-childrens-books/*  /articles/eric-carle-classic-children%27s-books/:splat  301
+/articles/frog-and-toad-classic-childrens-books/* /articles/frog-and-toad-classic-children%27s-books/:splat 301
+
+# ── Singular → plural (bithues specific) ──
+/story/ /stories/ 301
+
+# ── Root index ──
+/index.html / 301
+
+# ── Orphan URL redirects (soft-404 farm cleanup, 2026-06-17) ──
+# These URLs were returning 200 with the home page HTML (CF Pages
+# fell through to index.html). Each had a broken canonical pointing
+# to the home, which created "Duplicate" GSC errors. 301 each to the
+# correct destination so Google de-indexes the orphan.
+
+# /press/ does not exist on disk — bithues has no press page.
+/press/ / 301
+
+# /about.html — directory /about/ exists, redirect the legacy .html
+/about.html /about/ 301
+
+# /press.html — file does not exist on disk, redirect to home
+/press.html / 301
+
+# /reviews/<n> — legacy integer URL pattern; real reviews use slugs.
+# 301 all integer URLs to the reviews listing.
+/reviews/:n /reviews/ 301
+
+# /reviews/<n>.html — same: no such file, redirect to the listing.
+/reviews/:n.html /reviews/ 301
+
+# (WordPress-era query string orphans /?s=* /?p=* were removed —
+# the CF Pages _redirects syntax matched '/' alone and broke the
+# home page redirect. See 2026-06-17 memory entry. Fix path:
+# Pages Function that detects the query string and 301s, OR
+# live with the soft-404 since the ?s=/?p= URLs are not high-value
+# for SEO and only exist in legacy WordPress back-links.)
+# ── Series → Collections consolidation (2026-07-18) ──
+# /series/otomi/ is the same page, same schema, same footer column
+# as /collections/physics-consciousness/ and
+# /collections/little-mike-books/. One label for one thing.
+# 301 with explicit /:splat handling in case subpaths ever appear.
+/series/otomi/  /collections/otomi-saga/  301
+/series/otomi/* /collections/otomi-saga/:splat 301

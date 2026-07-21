@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>PAGE TITLE</title>
+ <meta name="description" content="PAGE DESCRIPTION">
+ <link rel="canonical" href="CANONICAL_PLACEHOLDER">
+ <meta property="og:type" content="website">
+ <meta property="og:image" content="https://bithues.com/og-image.jpg">
+   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="/favicon-128x128.png">
+  <link rel="shortcut icon" href="/favicon.ico">
+ <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+ <link rel="manifest" href="/site.webmanifest">
+ <link rel="preload" as="image" href="/stories/images/tcp-hero.jpg" fetchpriority="high">
+ <link rel="stylesheet" href="/style.css">
+ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+ <!-- Google tag (gtag.js) — GA4 (Bithues property 533685315). Deferred via requestIdleCallback. -->
+ <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  function loadGtag(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-W1V9M9JHJ2';document.head.appendChild(s);gtag('js',new Date());gtag('config','G-W1V9M9JHJ2');}
+  if('requestIdleCallback' in window){requestIdleCallback(loadGtag,{timeout:3000});}else{window.addEventListener('load',loadGtag);}
+ </script>
+</head>
+<body>
+
+ <div id="site-utility"></div>
+ <div id="site-nav"></div>
+
+ <main>
+ <!-- PAGE CONTENT GOES HERE -->
+ </main>
+
+ <div id="site-footer"></div>
+
+ <script defer src="/nav.js"></script>
+ <script defer src="/footer.js"></script>
+ <script>
+(function() {
+  var bar = document.querySelector('.genre-filter-bar');
+  if (!bar) return;
+  bar.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var genre = btn.getAttribute('data-value');
+      bar.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelectorAll('.article-card[data-genre]').forEach(function(card) {
+        card.style.display = (genre === 'all' || card.getAttribute('data-genre') === genre) ? '' : 'none';
+      });
+    });
+  });
+})();
+ </script>
+
+</body>
+</html>
