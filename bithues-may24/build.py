@@ -323,8 +323,13 @@ def wrap_in_template(page_title: str, page_desc: str, main_html: str,
     tmpl = tmpl.replace("<!-- PAGE CONTENT GOES HERE -->", main_html, 1)
     if active_nav:
         tmpl = tmpl.replace(
+            f'href="/{active_nav}/"',
+            f'href="/{active_nav}/" class="active"',
+        )
+        # legacy bare-form fallback (kept for templates that haven't been updated)
+        tmpl = tmpl.replace(
             f'href="/{active_nav}"',
-            f'href="/{active_nav}" class="active"',
+            f'href="/{active_nav}/" class="active"',
         )
     tmpl = tmpl.replace("CANONICAL_PLACEHOLDER", BASE_URL + canonical_path, 1)
     # Inject JSON-LD schema.org structured data before </head>
@@ -615,13 +620,13 @@ def story_card_html(slug: str, meta: dict, index: int) -> str:
 # ── Page-Turn Navigation ───────────────────────────────────────────────────────
 def page_nav_html(slug: str, current_page: int, total_pages: int) -> str:
     prev_link = (
-        f'<a href="/{slug}?page={current_page - 1}#content" '
+        f'<a href="/{slug}/?page={current_page - 1}#content" '
         f'class="page-prev">&#8592; Previous</a>'
         if current_page > 1
         else '<span class="page-prev disabled">&#8592; Previous</span>'
     )
     next_link = (
-        f'<a href="/{slug}?page={current_page + 1}#content" '
+        f'<a href="/{slug}/?page={current_page + 1}#content" '
         f'class="page-next">Next &#8594;</a>'
         if current_page < total_pages
         else '<span class="page-next disabled">Next &#8594;</span>'
@@ -663,13 +668,13 @@ def story_page_html(slug: str, meta: dict, body_html: str,
         nav_parts = []
         if prev_slug:
             nav_parts.append(
-                f'<a href="/{prev_slug}" class="story-nav-item prev-item">'
+                f'<a href="/{prev_slug}/" class="story-nav-item prev-item">'
                 f'<div class="story-nav-label">&#8592; Previous</div>'
                 f'<div class="story-nav-title">{prev_title}</div></a>'
             )
         if next_slug:
             nav_parts.append(
-                f'<a href="/{next_slug}" class="story-nav-item next-item">'
+                f'<a href="/{next_slug}/" class="story-nav-item next-item">'
                 f'<div class="story-nav-label">Next &#8594;</div>'
                 f'<div class="story-nav-title">{next_title}</div></a>'
             )
@@ -1200,7 +1205,7 @@ def article_card(slug: str, meta: dict, index: int) -> str:
  <div class="card-thumb articles-thumb" style="background-image:url({img_path});" role="img" aria-label="{title}"></div>
  <div class="category-label">{genre}</div>
  {date_str}
- <h3><a href="/articles/{slug}">{title}</a></h3>
+ <h3><a href="/articles/{slug}/">{title}</a></h3>
  <p>{summary}</p>
 </div>"""
 
@@ -1483,19 +1488,26 @@ def newsletter_card(slug: str, meta: dict, index: int) -> str:
     + 'Read →'. Matched to bithues palette (cream surface, dark ink, warm
     accent). Mike 2026-07-10 ET: 'make it more like this setup/format with the
     boxes' referring to spaceorbitals.com/newsletters/.
+
+    Updated 2026-07-22 to expose `issue_type` as a chip so the archive displays
+    editorial variety (reader-state / backlist-revival / micro-season / etc.)
+    per the redesign spec.
     """
     date    = meta.get("date") or ""
     title   = meta.get("title", slug)
     summary = truncate_words(meta.get("summary", ""), 160)
     author  = meta.get("author", "") or ""
+    issue_type = (meta.get("issue_type") or "").lower().strip()
 
-    # Meta line: "YYYY-MM-DD · author · Newsletter" — drop missing parts.
+    # Meta line: "YYYY-MM-DD · author · Newsletter [· issue-type]"
     meta_parts = []
     if date:
         meta_parts.append(date)
     if author:
         meta_parts.append(author)
     meta_parts.append('<span class="tag tag--article">Newsletter</span>')
+    if issue_type:
+        meta_parts.append(f'<span class="tag tag--issue-type">{issue_type.replace("-", " ")}</span>')
     meta_html = " · ".join(meta_parts)
 
     return f"""<article class="newsletter-grid-card">
@@ -1746,36 +1758,126 @@ def generate_newsletters_listing(all_newsletters: list[tuple[str, dict, str]]) -
  </article>
 </div>"""
 
+    # ── 2026-07-22 REDESIGN: conversion-first landing page per spec §"Required Page Order" ──
+    # Order: hero → form → benefits → samples → editorial standards → archive → final CTA → AdSense
+    # The "archive below persuasion" principle: NO long archive list before the form.
+
+    # ── Step 3: Email signup form (above the fold per spec §"Above-the-Fold Rules") ──
+    # TODO (Mike): replace FORM_ACTION_PLACEHOLDER with your ESP endpoint.
+    # Options for newsletter@<300-book audience>:
+    #   - Buttondown: https://buttondown.email/api/emails/embed-subscribe/<username>
+    #   - Mailchimp: https://<dc>.list-manage.com/subscribe/post?u=<u>&id=<id>
+    #   - ConvertKit: https://app.convertkit.com/forms/<id>/subscriptions
+    #   - Substack: https://<publication>.substack.com/embed
+    # The form uses POST + email-only per spec.
+    signup_form = """<section class="page-cta signup-form signup-form--hero" aria-label="Subscribe to the Daily Reading Signal">
+ <form class="signup-form__form" action="FORM_ACTION_PLACEHOLDER" method="post" target="_blank" novalidate>
+  <label for="nl-email" class="visually-hidden">Email address</label>
+  <input id="nl-email" class="signup-form__input" type="email" name="EMAIL" placeholder="your@email.com" required autocomplete="email" />
+  <button type="submit" class="signup-form__submit">Get tomorrow's signal</button>
+ </form>
+ <p class="signup-form__fineprint">One morning note a day, every day. Unsubscribe any time.</p>
+</section>"""
+
+    # ── Step 4: Three benefit blocks (reader outcomes, NOT features) ──
+    # Spec §"Benefit Blocks" — "Each benefit block should express a reader outcome, not a feature."
+    benefit_blocks = """<section class="nl-benefits" aria-label="What you get">
+ <div class="nl-benefits-grid">
+  <div class="nl-benefit">
+   <h3 class="nl-benefit__title">Find the right book for the week you are actually in</h3>
+   <p class="nl-benefit__body">Every issue names a specific reading condition — a season, an attention state, a problem — and matches it to books that earn their place in that condition. Not a list. A thesis.</p>
+  </div>
+  <div class="nl-benefit">
+   <h3 class="nl-benefit__title">Recover overlooked books at exactly the right moment</h3>
+   <p class="nl-benefit__body">A backlist revival returns once or twice a week — an older book whose timing has come back around, with the argument for why now is when it works.</p>
+  </div>
+  <div class="nl-benefit">
+   <h3 class="nl-benefit__title">Build a reading life with more timing and less noise</h3>
+   <p class="nl-benefit__body">No bestseller blasts, no marketing copy, no clickbait. One short essay plus 1–3 books, in under five minutes, before your day begins.</p>
+  </div>
+ </div>
+</section>"""
+
+    # ── Step 5: Sample issue cards — 3 hand-picked by issue_type variety ──
+    # Priority order per spec SKILL.md "Sample Card Picker Logic":
+    # reader-state > micro-season > backlist-revival > quiet-trio > reading-problem-solver > seasonal-shelf > weekly-digest
+    PRIORITY_TYPES = [
+        "reader-state", "micro-season", "backlist-revival", "quiet-trio",
+        "reading-problem-solver", "seasonal-shelf", "weekly-digest",
+    ]
+
+    chosen_per_type: dict[str, tuple[str, dict]] = {}
+    # Walk items oldest-first within type-priority, skipping the latest (which already lives in the hero).
+    for slug, meta, _ in reversed(items[1:]):
+        it = (meta.get("issue_type") or "").lower().strip()
+        if it in PRIORITY_TYPES and it not in chosen_per_type:
+            chosen_per_type[it] = (slug, meta)
+
+    sample_blocks_html_parts = []
+    for key in PRIORITY_TYPES:
+        chosen = chosen_per_type.get(key)
+        if not chosen:
+            continue
+        s_slug, s_meta = chosen
+        s_title = s_meta.get("title", s_slug)
+        s_summary = s_meta.get("summary", "")
+        s_date = s_meta.get("date", "")
+        s_author = s_meta.get("author", "")
+        s_type_label = key.replace("-", " ")
+        sample_blocks_html_parts.append(f"""<article class="nl-sample-card">
+ <div class="nl-sample-card__meta">{s_date} &middot; by {s_author} &middot; <span class="nl-sample-card__type">{s_type_label}</span></div>
+ <h3 class="nl-sample-card__title"><a href="/newsletters/{s_slug}/">{s_title}</a></h3>
+ <p class="nl-sample-card__summary">{s_summary}</p>
+ <a href="/newsletters/{s_slug}/" class="nl-sample-card__cta">Read this issue &rarr;</a>
+</article>""")
+
+    sample_block = ""
+    if sample_blocks_html_parts:
+        sample_block = f"""<section class="nl-samples" aria-label="Sample issues">
+ <h2 class="nl-samples__heading">A few recent issues</h2>
+ <div class="nl-samples-grid">
+{''.join(sample_blocks_html_parts)}
+ </div>
+</section>"""
+
+    # ── Step 6: Editorial standards ("Why readers stay") — compressed from prior 5 prose sections ──
+    editorial_standards = """<section class="nl-standards" aria-label="Editorial standards">
+ <h2>Why readers stay</h2>
+ <p>Bithues is held to the same standard as the reviews: every book in the newsletter is one the editors have read end to end. Reading signals are framed as the editor's reading of the book, not a generic claim about what the book says. Affiliate links, where they appear, are tied to a specific Bithues recommendation, not to an algorithmic pull. The newsletter is editorial coverage, not a marketing channel.</p>
+ <p>The signal runs daily at 5:45 AM ET, in under five minutes. Sunday is reserved for short fiction; there are no affiliate links on Sundays. The archive below goes back to launch and stays accessible.</p>
+</section>"""
+
+    # ── Step 8: Final signup CTA + form repeat ──
+    # Note: reuse signup_form but rename the inner classes for the final CTA so the CSS hook
+    # `.signup-form--final` applies to the OUTER section, not the inner one.
+    final_form = signup_form.replace('signup-form signup-form--hero', 'signup-form signup-form--final-inner')
+    final_cta = f"""<section class="page-cta signup-form signup-form--final" aria-label="Subscribe">
+ <h2 class="signup-form__heading">Start your morning with a signal.</h2>
+ <p class="signup-form__subheading">One short essay. 1 to 3 books. Sent at 5:45 AM ET, before the lists.</p>
+ {final_form}
+</section>"""
+
     main = f"""<section class="page-hero">
  <h1>Daily Reading Signal</h1>
- <p>One book-related idea every morning -- a single insight to take into your day, grounded in the books we read and review.</p>
+ <p class="page-hero__lede">A literary morning note that names the reading condition of the moment and tells you which books belong inside it. Sent daily at 5:45 AM ET.</p>
 </section>
 {latest_block}
+{signup_form}
+{benefit_blocks}
+{sample_block}
+{editorial_standards}
+
+<section class="nl-archive" aria-label="Newsletter archive">
+ <h2>The archive</h2>
+ <p class="nl-archive__intro">Every issue, indexed chronologically with the most recent at the top.</p>
 {grid_block}
-
-<section class="page-content" style="max-width:800px;margin:0 auto;padding:24px;">
- <h2>How the newsletters are produced</h2>
- <p>The newsletters are produced by the editorial team. The daily newsletter is written by the editor on duty that day, drawing from the morning briefing data, the trade journal entries published that week, and the news cycle. The weekly newsletter is written by the editor-in-chief and provides a longer-form synthesis of the week's content. Both newsletters are reviewed by a second editor before publication to catch errors and inconsistencies.</p>
- <p>The newsletter production follows a consistent schedule. The daily newsletter is published at 5:45 AM ET on weekdays and is delivered to subscribers between 6:00 and 6:30 AM ET. The weekly newsletter is published on Sunday at 5:00 PM ET and is delivered to subscribers between 5:00 and 5:30 PM ET. The schedule is documented on this page and is consistent week to week so subscribers know when to expect the newsletter in their inbox.</p>
-
- <h2>What subscribers get</h2>
- <p>The daily newsletter includes: the morning's market brief, a summary of new reviews and articles published in the past 24 hours, a featured review or article of the day, and a curated link to one piece of related reading. The weekly newsletter includes: a synthesis of the week's reviews and articles, a longer-form essay on a topic from the week's content, and a curated list of recommended reading from elsewhere on the web.</p>
-
- <h2>What subscribers do not get</h2>
- <p>Subscribers do not get more email than the two newsletters per week (daily during the week, weekly on Sunday). Subscribers do not get marketing emails except for product announcements related to the site itself (a new shop launch, a major site update). Subscribers do not get their email addresses shared with third parties.</p>
-
- <h2>How to subscribe and unsubscribe</h2>
- <p>To subscribe, use the signup form on the homepage or in the site footer. To unsubscribe, use the unsubscribe link in the footer of any newsletter email, or email the contact address listed on the contact page. Unsubscriptions are processed within 24 hours.</p>
-
- <h2>Editorial standards for the newsletter</h2>
- <p>The newsletter is held to the same editorial standard as the reviews. Books referenced in the newsletter are books the editors have actually read end to end. Reading signals are framed as the editor's reading of the book, not as a general claim about what the book says. Affiliate links, where they appear, are clearly marked and are tied to a specific Bithues recommendation, not to an algorithmic pull. The newsletter is a tool of editorial coverage, not a marketing channel.</p>
-
- <h2>Newsletter archive</h2>
- <p>The full archive of past newsletters is published on this page, indexed chronologically with the most recent issue at the top of the grid. The archive goes back to the launch of the daily format. Newsletters that the editor considers foundational reading for understanding the site's editorial voice are highlighted in the archive. Historical newsletters remain accessible indefinitely; the archive is not pruned.</p>
 </section>
+
+{final_cta}
 
 {ADSENSE_BLOCK_HORIZONTAL}
 """
+
     # Build an ItemList schema for the newsletter listing so the page is
     # eligible for the "Top stories" carousel in Google Discover and as a
     # navigational entry point for search engines.
@@ -1786,13 +1888,13 @@ def generate_newsletters_listing(all_newsletters: list[tuple[str, dict, str]]) -
     schema_extra = build_listing_schema(
         "newsletters",
         "Daily Reading Signal",
-        "One book-related idea every morning. A daily newsletter from Bithues.",
+        "A literary morning note that names the reading condition of the moment and tells you which books belong inside it. A daily newsletter from Bithues for serious readers.",
         BASE_URL + "/newsletters/",
         listing_items,
     )
     return wrap_in_template(
-        "Daily Reading Signal",
-        "One book-related idea every morning. A daily newsletter from Bithues -- a single reading insight to take into your day.",
+        "Daily Reading Signal — Bithues",
+        "A literary morning note that names the reading condition of the moment and tells you which books belong inside it. Sent daily at 5:45 AM ET.",
         main, "newsletters", canonical_path="/newsletters/",
         schema_extra=schema_extra,
     )
@@ -1890,7 +1992,7 @@ def generate_index(all_stories: list[tuple[str, dict, str]]) -> str:
         '<div class="section-col">\n'
         '<div class="section-header">'
         '<h2>MORE ARTICLES</h2>'
-        '<a href="/articles" class="explore-link">View all &#8594;</a>'
+        '<a href="/articles/" class="explore-link">View all &#8594;</a>'
         '</div>\n'
         + '\n'.join(article_card(a_slug, a_meta, i)
                     for i, (a_slug, a_meta, _) in enumerate(more_articles))
@@ -1899,7 +2001,7 @@ def generate_index(all_stories: list[tuple[str, dict, str]]) -> str:
         '<div class="section-col">\n'
         '<div class="section-header">'
         '<h2>MORE STORIES</h2>'
-        '<a href="/stories" class="explore-link">View all &#8594;</a>'
+        '<a href="/stories/" class="explore-link">View all &#8594;</a>'
         '</div>\n'
         + '\n'.join(story_card_html(slug, meta, i)
                     for i, (slug, meta, _) in enumerate(more_stories))
@@ -1909,7 +2011,7 @@ def generate_index(all_stories: list[tuple[str, dict, str]]) -> str:
         '<div class="section-col">\n'
         '<div class="section-header">'
         '<h2>MORE BOOK REVIEWS</h2>'
-        '<a href="/reviews" class="explore-link">View all &#8594;</a>'
+        '<a href="/reviews/" class="explore-link">View all &#8594;</a>'
         '</div>\n'
         + '\n'.join(review_card(r_slug, r_meta, i)
                     for i, (r_slug, r_meta, _) in enumerate(more_reviews))
@@ -2004,13 +2106,13 @@ def generate_story_page_chapters(slug: str, meta: dict, body: str,
         nav_parts = []
         if prev_slug:
             nav_parts.append(
-                f'<a href="/{prev_slug}" class="story-nav-item prev-item">'
+                f'<a href="/{prev_slug}/" class="story-nav-item prev-item">'
                 f'<div class="story-nav-label">&#8592; Previous</div>'
                 f'<div class="story-nav-title">{prev_title}</div></a>'
             )
         if next_slug:
             nav_parts.append(
-                f'<a href="/{next_slug}" class="story-nav-item next-item">'
+                f'<a href="/{next_slug}/" class="story-nav-item next-item">'
                 f'<div class="story-nav-label">Next &#8594;</div>'
                 f'<div class="story-nav-title">{next_title}</div></a>'
             )
@@ -2409,6 +2511,9 @@ def generate_sitemap(stories: list, articles: list, reviews: list, newsletters: 
     urls = []
 
     # Static pages (all with trailing slash, lastmod = today — touched every build)
+    # Added /shop/ 2026-08-04 (was missing from sitemap despite /shop/index.html
+    # existing on disk, causing "URL unknown to Google" — fix per cross-site
+    # sitemap audit).
     static = [
         "/",
         "/about/",
@@ -2417,6 +2522,7 @@ def generate_sitemap(stories: list, articles: list, reviews: list, newsletters: 
         "/reviews/",
         "/stories/",
         "/newsletters/",
+        "/shop/",
         "/contact/",
         "/privacy/",
         "/terms/",
