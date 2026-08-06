@@ -83,6 +83,14 @@ def parse_front_matter(content: str) -> tuple[dict, str]:
                 meta[key] = val
         else:
             meta[key] = val
+    # Doctrine (2026-08-05): meta description must be ≤160 chars
+    # (Google truncates around 155-160). Trim if longer.
+    # Apply to BOTH `description` and `summary` because some templates
+    # (e.g. newsletters) use `summary` as the meta tag source.
+    for _key in ("description", "summary"):
+        _val = meta.get(_key)
+        if _val and len(_val) > 160:
+            meta[_key] = _val[:160]
     return meta, body
 
 
