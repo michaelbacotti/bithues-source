@@ -2,7 +2,7 @@
 title: "The Patience of Long Books: What The Covenant of Water Teaches About Staying"
 author: "Eleanor Ashford"
 date: "2026-07-14"
-issue_type: "one-book-meditation"
+issue_type: "backlist-revival"
 topic: "literary-criticism"
 summary: "A meditation on Abraham Verghese's The Covenant of Water and what it means to stay with a book long enough for it to change shape."
 description: "Why Verghese's generations-spanning novel is worth meeting at its own pace, not the pace of the season."

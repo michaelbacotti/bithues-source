@@ -4,7 +4,7 @@ author: "Margaret Chen"
 date: "2026-07-20"
 section: newsletters
 genre_label: "Reading Roundup"
-issue_type: "reading-signal"
+issue_type: "weekly-digest"
 topic: "book-roundup"
 summary: "A Reading Signal for late July built around the unusual moment when the bestseller lists start pointing at the same five books. What the convergence tells us about the slow middle of summer, and how to choose among them."
 description: "Five July 2026 bestsellers that have quietly converged across the NYT, indie, and Amazon charts. Why Patchett and O'Farrell are publishing companion novels in the same month, what a 36-week sleeper about letters tells us about attention, and how to read at the speed the season actually rewards."
@@ -30,7 +30,7 @@ The reason the lists are agreeing on *Whistler* is that Patchett is doing a thin
 
 ## Maggie O'Farrell Maps a Country After the Famine
 
-If *Whistler* is the book at the top of the literary conversation, Maggie O'Farrell's [*Land*](https://www.amazon.com/Land-Novel-Maggie-OFarrell/dp/0593320646/?tag=bithues-20) is the book sitting in the same conversation one step to its left. Published by Knopf on the same June 2 date, currently at number eleven on the *Times* hardcover fiction list, reviewed in the *Guardian*, the *New York Times*, *Condé Nast Traveler*, and *Kirkus*, it is the historical novel of the season and the one that the indie lists have been pushing for weeks.
+If *Whistler* is the book at the top of the literary conversation, Maggie O'Farrell's [*Land*](https://www.amazon.com/Land-Novel-Maggie-OFarrell/dp/1472289099/?tag=bithues-20) is the book sitting in the same conversation one step to its left. Published by Knopf on the same June 2 date, currently at number eleven on the *Times* hardcover fiction list, reviewed in the *Guardian*, the *New York Times*, *Condé Nast Traveler*, and *Kirkus*, it is the historical novel of the season and the one that the indie lists have been pushing for weeks.
 
 The premise is that in 1865, a man and his son are employed by the British to survey and map the island of Ireland in the aftermath of the Great Famine. The premise is also that the son, who narrates, is recovering from an encounter with a stranger on a peninsula that has changed the way his father sees him. The novel moves through Dublin, Rome, Quebec, and Kerala. It is the kind of book that makes the indie list because it is the kind of book that an indie bookseller can hand to a customer and say: this is the book for the kind of summer you are having.
 

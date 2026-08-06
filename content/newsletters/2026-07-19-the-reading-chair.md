@@ -2,7 +2,7 @@
 title: "The Reading Chair: A Sunday Story About the Books We Inherit"
 author: "Eleanor Ashford"
 date: 2026-07-19
-issue_type: "short-story-issue"
+issue_type: "reader-state"
 topic: "fiction"
 summary: "A short story about three library books found in a grandfather's reading chair the week he died, the pencil marks he left in their margins, and the small inheritance of finishing what someone else started."
 description: "Why the books we inherit ask to be read slowly, what a librarian who does not ask why gives back to a reader on her first Sunday without him, and the quiet civic ceremony of paying a fine in cash."

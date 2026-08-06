@@ -5,6 +5,7 @@ date: "2026-07-06"
 section: newsletters
 genre_label: "Reading Habits"
 summary: "A daily signal on how the books we read shape the way we read them -- and why a slower pace often turns out to be the most generous one. Three reading paths through the Bithues catalog."
+issue_type: "reader-state"
 featured: true
 draft: false
 featured_image: 2026-07-06-slow-attention-as-a-reading-practice.jpg

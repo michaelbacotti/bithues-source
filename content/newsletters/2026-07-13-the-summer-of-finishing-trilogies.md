@@ -2,7 +2,7 @@
 title: "The Summer of Finishing Trilogies: What Readers Are Reaching For This Week"
 author: "Sarah Voss"
 date: "2026-07-13"
-issue_type: "reading-signal"
+issue_type: "weekly-digest"
 topic: "reading-practice"
 summary: "Four books readers are turning to this week -- from a much-anticipated trilogy finale to a slim story collection that moves slowly through grief, and a plant scientist who changed how readers look at lawns."
 description: "A reading signal on what books are moving this week, anchored by the Colson Whitehead trilogy finale, a Sigrid Nuñez short story collection, and the perennial return of Robin Wall Kimmerer, plus a thriller that delivers without apology."

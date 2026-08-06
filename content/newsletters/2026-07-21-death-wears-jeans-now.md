@@ -2,7 +2,7 @@
 title: "The Death Who Wears Jeans: A Debut Novel About Staying With the Hours Most Books Miss"
 author: "Aisha Patel"
 date: 2026-07-21
-issue_type: "one-book-meditation"
+issue_type: "backlist-revival"
 topic: "fiction"
 summary: "A meditation on Ben Reeves debut novel Everything Was Beautiful and Nothing Hurt, the July 2026 Indie Next Number One Pick narrated by Death himself, and what the book understands about the ordinary hours that precede a life ending."
 description: "Why Ben Reeves quiet first novel is the right book for the slow middle of summer, what a fictional Death who wears jeans understands about grief that the rest of us do not, and how to read it on a week when nothing in particular is being asked of you."
@@ -35,7 +35,7 @@ It is also, and this is worth saying, for readers who are afraid of books about 
 
 ## A Note on Format
 
-I read *Everything Was Beautiful and Nothing Hurt* in print, and that is the format I would suggest. The prose has a quiet cadence that rewards the eye, and there are passages, especially in the second half, that benefit from being read twice, and a printed page tolerates a second reading in a way that a screen does not. The chapters are short. The book can be read in three or four sittings or in one long afternoon. The audiobook exists and is well-reviewed, and the voice actor who plays Travis has apparently found a register that is exactly right. Audio is a good option for readers who want to be read to on a long drive, and it is the right format for readers who want the experience of someone else holding the room while the story moves. ([Everything Was Beautiful and Nothing Hurt on Amazon](https://www.amazon.com/Everything-Was-Beautiful-Nothing-Hurt/dp/1668216361/?tag=bithues-20))
+I read *Everything Was Beautiful and Nothing Hurt* in print, and that is the format I would suggest. The prose has a quiet cadence that rewards the eye, and there are passages, especially in the second half, that benefit from being read twice, and a printed page tolerates a second reading in a way that a screen does not. The chapters are short. The book can be read in three or four sittings or in one long afternoon. The audiobook exists and is well-reviewed, and the voice actor who plays Travis has apparently found a register that is exactly right. Audio is a good option for readers who want to be read to on a long drive, and it is the right format for readers who want the experience of someone else holding the room while the story moves. ([Everything Was Beautiful and Nothing Hurt on Amazon](https://www.amazon.com/Everything-Was-Beautiful-Nothing-Hurt/dp/1420536656/?tag=bithues-20))
 
 ## A Closing
 

@@ -5,6 +5,7 @@ date: "2026-07-07"
 section: newsletters
 genre_label: "Reading Habits"
 summary: "A daily signal on the small, durable discipline of completing a book -- and why the books you finish shape the reader you are becoming. A short meditation on completion in a partial-attention world."
+issue_type: "reader-state"
 featured: true
 draft: false
 featured_image: 2026-07-07-the-quiet-revolution-of-finishing-things.jpg

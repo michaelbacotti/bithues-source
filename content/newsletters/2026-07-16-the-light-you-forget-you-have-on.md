@@ -2,7 +2,7 @@
 title: "The Light You Forget You Have On: Reading Tools Worth Buying Once"
 author: "David Okonkwo"
 date: 2026-07-16
-issue_type: "object-issue"
+issue_type: "reading-problem-solver"
 topic: "accessories"
 summary: "A Shelf Notes issue for the slow middle of July, on reading objects that pass the buy-once test -- the book light, the page marker, the journal, and the tote that earn their place by disappearing into the work of reading."
 description: "Why some reading tools last a decade and others last a week, four specific objects that pass the buy-once test for midsummer reading, and a short note on what changes when the right tool quietly takes over."

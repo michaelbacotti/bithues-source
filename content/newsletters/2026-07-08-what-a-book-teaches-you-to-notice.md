@@ -5,6 +5,7 @@ date: "2026-07-08"
 section: newsletters
 genre_label: "Reading Habits"
 summary: "A daily signal on the books that train your eye -- the novels and nonfiction that, weeks later, still change what you see on a walk, in a conversation, at the kitchen table. Three reads that rewire your attention."
+issue_type: "reader-state"
 featured: true
 draft: false
 featured_image: 2026-07-08-what-a-book-Teaches-You-to-NOTICE.jpg

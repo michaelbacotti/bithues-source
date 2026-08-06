@@ -2,7 +2,7 @@
 title: "The Books on the Kitchen Counter: A Reading Life Note for Mid-July"
 author: "Aisha Patel"
 date: "2026-07-15"
-issue_type: "reading-life-essay"
+issue_type: "micro-season"
 topic: "reading-practice"
 summary: "A reading life essay on the books we keep visible but unread -- the way midsummer intention outpaces midsummer attention, and what the right week eventually teaches us about both."
 description: "Why some books wait for us on the counter until the weather and the reader finally agree, and a note on the Daniel Mason novel that arrived at the right moment for mid-July."

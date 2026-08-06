@@ -2,7 +2,7 @@
 title: "Jesus' Son at Thirty-Four: A Backlist Revival for the Long Afternoon"
 author: "Sarah Voss"
 date: 2026-07-18
-issue_type: "literary-mini-criticism"
+issue_type: "backlist-revival"
 topic: "literary-criticism"
 summary: "A backlist revival of Denis Johnson's 1992 short-story cycle, on why the long afternoon of summer is when short fiction returns, and why this slender American book deserves the perennial attention the literary conversation usually reserves for longer novels."
 description: "A literary mini criticism on Jesus Son at thirty four, the short story cycle that quietly taught American fiction how to write in shorter sentences, and why mid July is the right week to return to it."

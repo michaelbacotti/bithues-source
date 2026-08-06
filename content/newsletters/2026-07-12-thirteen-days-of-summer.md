@@ -2,7 +2,7 @@
 title: "Thirteen Days of Summer: A Story About the Books You Save"
 author: "Margaret Chen"
 date: "2026-07-12"
-issue_type: "short-story-issue"
+issue_type: "reader-state"
 topic: "reading-practice"
 summary: "A short story about a man who saves a thin novel for the right Sunday, the right light, and the version of himself who might finally deserve to read it properly."
 description: "A Sunday morning story about the books we keep on the counter instead of reading, and the particular slowness that eventually makes us."

@@ -5,6 +5,7 @@ date: "2026-07-10"
 section: newsletters
 genre_label: "Reading Roundup"
 summary: "Five books readers are picking up this week, plus the accessories that make them easier to live with."
+issue_type: "seasonal-shelf"
 featured: true
 draft: false
 featured_image: 2026-07-10-the-reading-list-for-uncertain-times.jpg

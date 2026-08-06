@@ -5,6 +5,7 @@ date: "2026-07-09"
 section: newsletters
 genre_label: "Reading Habits"
 summary: "A daily signal on the case for rereading -- the books worth visiting twice, the questions a second reading answers, and what it means to read a book as a living document rather than a finished product."
+issue_type: "backlist-revival"
 featured: true
 draft: false
 featured_image: 2026-07-09-the-art-of-rereading-why-second-visits-matter.jpg

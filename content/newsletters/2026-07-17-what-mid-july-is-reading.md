@@ -2,7 +2,7 @@
 title: "What Mid-July Is Reading: Five Books Crossing Lists Eleven Days Before the Booker Longlist"
 author: "Jonas Albright"
 date: 2026-07-17
-issue_type: "hybrid-issue"
+issue_type: "quiet-trio"
 topic: "fiction"
 summary: "A Week in Pages for mid-July, on five books that are crossing from the indie bestseller list into the larger conversation just as the Booker Prize longlist looms eleven days away."
 description: "Why the slow middle of July is when the lists start voting early, four books crossing the indie bestseller chart this week, one nonfiction field guide that earns its place beside them, and the small object that quietly supports a long midsummer reading life."
@@ -17,7 +17,7 @@ This week's Week in Pages is built around five books that are crossing lists rig
 
 ## The Reading Signal
 
-The indie bestseller list this week is unusually full of books that ask for a kind of attention the season usually does not allow. [Heart the Lover](https://www.amazon.com/Heart-Lover-Lily-King/dp/1837265585/?tag=bithues-20) by Lily King is at the top of the literary fiction side. [Taiwan Travelogue](https://www.amazon.com/Taiwan-Travelogue-Novel-Shuang-zi-Yang/dp/1644453150/?tag=bithues-20) by Yáng Shuāng-zǐ, translated by Lin King, sits comfortably in the middle of the same chart. Jacqueline Harpman's [I Who Have Never Known Men](https://www.amazon.com/Who-Have-Never-Known-Men/dp/1945492600/?tag=bithues-20) has been on and off the list for months, and is on it again this week. On the nonfiction side, [The Book of Birds: A Field Guide to Wonder and Loss](https://www.amazon.com/Book-Birds-Field-Guide-Wonder/dp/1324006846/?tag=bithues-20) by Jackie Morris and Robert MacFarlane has been quietly selling since the spring and is now in the top three independent press nonfiction titles for July.
+The indie bestseller list this week is unusually full of books that ask for a kind of attention the season usually does not allow. [Heart the Lover](https://www.amazon.com/Heart-Lover-Lily-King/dp/0802165176/?tag=bithues-20) by Lily King is at the top of the literary fiction side. [Taiwan Travelogue](https://www.amazon.com/Taiwan-Travelogue-Novel-Shuang-zi-Yang/dp/1644453150/?tag=bithues-20) by Yáng Shuāng-zǐ, translated by Lin King, sits comfortably in the middle of the same chart. Jacqueline Harpman's [I Who Have Never Known Men](https://www.amazon.com/Who-Have-Never-Known-Men/dp/1945492600/?tag=bithues-20) has been on and off the list for months, and is on it again this week. On the nonfiction side, [The Book of Birds: A Field Guide to Wonder and Loss](https://www.amazon.com/Book-Birds-Field-Guide-Wonder/dp/0241404738/?tag=bithues-20) by Jackie Morris and Robert MacFarlane has been quietly selling since the spring and is now in the top three independent press nonfiction titles for July.
 
 These are not books that needed the lists. They are books the lists are catching up to. That is the difference that matters in mid-July, when a reader can still pick a book for its own sake and not because a publication told them to.
 
@@ -49,7 +49,7 @@ The reason it is on the list in mid-July is not because anyone is marketing it. 
 
 ## The Book of Birds, the Nonfiction That Doesn't Need the Lists
 
-A field guide is not usually a midsummer reading book. A field guide is a thing you keep by the back door for when you spot a bird you cannot name. But [The Book of Birds](https://www.amazon.com/Book-Birds-Field-Guide-Wonder/dp/1324006846/?tag=bithues-20), by Jackie Morris with Robert MacFarlane, is the kind of field guide that doubles as a meditation on the kind of attention the season actually rewards. Morris is the illustrator who painted the owl on the cover of MacFarlane's *Lost Words*. MacFarlane is the writer who has been thinking about landscape and language for a long time. Together, they have made a book about birds that is mostly about what it means to notice a bird.
+A field guide is not usually a midsummer reading book. A field guide is a thing you keep by the back door for when you spot a bird you cannot name. But [The Book of Birds](https://www.amazon.com/Book-Birds-Field-Guide-Wonder/dp/0241404738/?tag=bithues-20), by Jackie Morris with Robert MacFarlane, is the kind of field guide that doubles as a meditation on the kind of attention the season actually rewards. Morris is the illustrator who painted the owl on the cover of MacFarlane's *Lost Words*. MacFarlane is the writer who has been thinking about landscape and language for a long time. Together, they have made a book about birds that is mostly about what it means to notice a bird.
 
 This is the kind of book that does not have a season. It is the kind of book that makes the season better. It belongs in the week, alongside the four novels, because the week is not just about which books are getting read. It is about which books change the way a reader moves through a midsummer afternoon.
 

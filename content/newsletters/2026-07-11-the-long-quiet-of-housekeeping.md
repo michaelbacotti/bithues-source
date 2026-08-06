@@ -5,6 +5,7 @@ date: "2026-07-11"
 section: newsletters
 genre_label: "Backlist Revival"
 summary: "A backlist signal on Marilynne Robinson's Housekeeping -- a 1980 novel that still teaches summer readers how to attend to the ordinary, the stray, and the quietly unredeemed."
+issue_type: "backlist-revival"
 featured: true
 draft: false
 featured_image: 2026-07-11-the-long-quiet-of-housekeeping.jpg
