@@ -38,6 +38,21 @@ https://www.bithues.com/* https://bithues.com/:splat 301!
 /stories4.html /stories/ 301
 /stories5.html /stories/ 301
 
+# ── Stale paginated directories (pagination removed 2026-06-01) ──
+# 2026-08-08 CANONICAL FIX (class-12 cross-site-bug-ledger): GSC audit flagged
+# /blood-ties/ as "Duplicate, Google chose different canonical than user" because
+# the stale /stories/3/ page contains the same Blood Ties content (from the
+# pre-pagination-removal scheme). Google crawls /stories/3/ and sees the same
+# summary text, flagging it as a duplicate. Same risk for /stories/2/, /stories/4/,
+# /stories/5/ — they contain different content but are orphaned.
+# Test 2026-08-08: curl /stories/3/ → 200 (still served). After this redirect:
+# → 301 → /stories/. Fixes the duplicate-canonical state of /blood-ties/.
+# Also redirect /stories/2/ → /stories/ etc. for hygiene.
+/stories/2/    /stories/    301
+/stories/3/    /stories/    301
+/stories/4/    /stories/    301
+/stories/5/    /stories/    301
+
 # ── Individual content pages ──
 # Story pages at root level: /slug.html → /slug/
 # (now migrated to /slug/index.html — CF Pages handles automatically)
