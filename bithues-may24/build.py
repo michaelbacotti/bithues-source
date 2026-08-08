@@ -2450,9 +2450,31 @@ def generate_review_page(slug: str, meta: dict, body: str,
                           next_slug: str, next_title: str) -> str:
     body_html = md_to_html(body, meta)
     body_html = inject_adsense_into_body(body_html, topic=_adsense_topic_from_meta(meta))
-    page_title = meta.get("review_title") or meta.get("title", slug)
     title = meta.get("title", slug)
     desc  = meta.get("summary", f"A book review: {title}")
+
+    # 2026-08-08 TITLE DIFFERENTIATION FIX (class-7 cross-site-bug-ledger):
+    # Audit found unindexed reviews had generic titles like "The Martian | Bithues"
+    # that compete with Wikipedia, Goodreads, Amazon for the same query. Indexed
+    # articles on the site have keyword-rich titles. Pattern:
+
+    #   "<Book Title> by <Author> — A <Genre> Review | Bithues"
+
+    # This adds 3 high-value keyword slots (author name, genre, "review") that
+    # differentiate from the dominant horizontal competitors and let Google match
+    # to long-tail queries like "best science fiction book review".
+    # Falls back through the chain if optional meta fields are missing.
+    author = meta.get("author", "").strip()
+    genre  = meta.get("genre_label", "").strip()
+    if author and genre:
+        page_title = f"{title} by {author} — A {genre} Review"
+    elif author:
+        page_title = f"{title} by {author} — A Book Review"
+    elif genre:
+        page_title = f"{title} — A {genre} Review"
+    else:
+        page_title = f"{title} — A Book Review"
+
     content   = review_page_html(slug, meta, body_html,
                                   prev_slug, prev_title,
                                   next_slug, next_title)
