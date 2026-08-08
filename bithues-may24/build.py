@@ -1382,6 +1382,12 @@ def generate_articles_listing(all_articles: list[tuple[str, dict, str]], page: i
         for i, (slug, meta, _) in enumerate(current_page)
     )
     pagination_html = ""  # pagination removed 2026-06-01
+
+    # 2026-08-08 INTERNAL LINKING FIX (class-7 cross-site-bug-ledger):
+    # Wrap the listing in a 2-col sidebar layout: main content + newsletter sidebar.
+    # Feeds crawl priority from /articles/ (indexed) to /newsletters/ (unindexed).
+    all_newsletters = load_md_dir(NEWSLETTERS_DIR) if NEWSLETTERS_DIR.exists() else []
+    sidebar_html = newsletter_sidebar(all_newsletters, count=4)
     main = f"""<section class="page-hero">
  <h1>Articles</h1>
  <p>{len(filtered)} articles on reading, books, and what books teach us about being human.</p>
@@ -1395,11 +1401,16 @@ def generate_articles_listing(all_articles: list[tuple[str, dict, str]], page: i
   <button class="filter-btn" data-value="Children's">Children</button>
  </div>
 {ADSENSE_BLOCK_SQUARE}
- <div class="card-grid">
-  {cards}
- </div>
+ <div class="section-sidebar">
+ <div class="section-main">
+  <div class="card-grid">
+   {cards}
+  </div>
 {ADSENSE_BLOCK}
 {pagination_html}
+ </div>
+{sidebar_html}
+ </div>
 </section>
 
 {ADSENSE_BLOCK_HORIZONTAL}
@@ -1445,6 +1456,14 @@ def generate_reviews_listing(all_reviews: list[tuple[str, dict, str]], page: int
         pagination_html = f'<div class="pagination">{" ".join(page_links)}</div>'
     else:
         pagination_html = ""
+
+    # 2026-08-08 INTERNAL LINKING FIX (class-7 cross-site-bug-ledger):
+    # Wrap the listing in a 2-col sidebar layout with newsletter sidebar.
+    # /reviews/ is indexed but child /reviews/<slug>/ pages are not — adding a
+    # newsletter sidebar creates a cross-link from the indexed hub to unindexed
+    # newsletter spokes, plus the sidebar shows the editorial pipeline breadth.
+    all_newsletters = load_md_dir(NEWSLETTERS_DIR) if NEWSLETTERS_DIR.exists() else []
+    sidebar_html = newsletter_sidebar(all_newsletters, count=4)
     main = f"""<section class="page-hero">
  <h1>Book Reviews</h1>
  <p>{len(reviews_sorted)} book reviews — fiction, sci-fi, fantasy, nonfiction, and more.</p>
@@ -1462,11 +1481,16 @@ def generate_reviews_listing(all_reviews: list[tuple[str, dict, str]], page: int
   <button class="filter-btn" data-value="Children's">Children</button>
  </div>
 {adsense_square}
- <div class="card-grid card-grid-compact">
-  {cards}
- </div>
+ <div class="section-sidebar">
+ <div class="section-main">
+  <div class="card-grid card-grid-compact">
+   {cards}
+  </div>
 {adsense}
  {pagination_html}
+ </div>
+{sidebar_html}
+ </div>
  {adsense_horizontal}
 </section>"""
     # ItemList schema for reviews listing — feeds Google's "Top stories" carousel.
@@ -1524,6 +1548,100 @@ def newsletter_card(slug: str, meta: dict, index: int) -> str:
  <p class="newsletter-grid-card__summary">{summary}</p>
  <a href="/newsletters/{slug}/" class="newsletter-grid-card__cta">Read →</a>
 </article>"""
+
+
+# ── Newsletter mini-card (for sidebar / cross-link blocks) ───────────────────────
+def newsletter_mini_card(slug: str, meta: dict) -> str:
+    """Compact newsletter card used in sidebar / cross-link strips.
+
+    Shows date + title + summary. No CTA — verbose card. Used on /articles/ and
+    /reviews/ sidebars to feed crawl priority from indexed pages to unindexed
+    newsletter spokes. Mike 2026-08-08 directive: internal linking is the #1
+    leverage point for getting /newsletters/ indexed.
+    """
+    date    = meta.get("date") or ""
+    title   = meta.get("title", slug)
+    summary = truncate_words(meta.get("summary", ""), 80)
+    return f"""<div class="nl-mini-card">
+ <div class="nl-mini-card__date">{date}</div>
+ <h3 class="nl-mini-card__title"><a href="/newsletters/{slug}/">{title}</a></h3>
+ <p class="nl-mini-card__summary">{summary}</p>
+ <a href="/newsletters/{slug}/" class="nl-mini-card__cta">Read →</a>
+</div>"""
+
+
+# ── Review mini-card (for /newsletters/ sidebar cross-link to reviews) ────────────
+def review_mini_card(slug: str, meta: dict) -> str:
+    """Compact review card used in sidebar / cross-link strips."""
+    title = meta.get("title", slug)
+    genre = meta.get("genre_label") or meta.get("type_label", "Book Review")
+    return f"""<div class="nl-mini-card">
+ <div class="nl-mini-card__date">{genre}</div>
+ <h3 class="nl-mini-card__title"><a href="/reviews/{slug}/">{title}</a></h3>
+</div>"""
+
+
+# ── Cross-link sidebar: list of recent newsletters for /articles/ + /reviews/ ──────
+def newsletter_sidebar(newsletters: list, count: int = 4) -> str:
+    """Return a sidebar of the N most recent newsletters as a string.
+
+    Used on /articles/ and /reviews/ listing pages to cross-link from indexed
+    pages to unindexed newsletter URLs. Anti-pattern #7 (internal linking gap)
+    per cross-site-bug-ledger.md.
+    """
+    items = sorted(
+        [n for n in newsletters if n[0] != "index"],
+        key=lambda n: _parse_sort_date(n[1].get("date") or ""),
+        reverse=True,
+    )[:count]
+    cards = "\n".join(newsletter_mini_card(slug, meta) for slug, meta, _ in items)
+    return f"""<aside class="section-aside" aria-label="Daily Reading Signal newsletter">
+ <h2>Daily Reading Signal</h2>
+ <p style="font-size:0.85rem; color:#555; margin-bottom:12px;">A literary morning note on which books belong inside the week you're actually in.</p>
+{cards}
+ <a href="/newsletters/" class="see-all-link">See all {len([n for n in newsletters if n[0] != 'index'])} issues →</a>
+</aside>"""
+
+
+def review_sidebar(reviews: list, count: int = 5) -> str:
+    """Return a sidebar of the N most recent reviews for /newsletters/ page."""
+    items = sorted(
+        [r for r in reviews if r[0] != "index"],
+        key=lambda r: _parse_sort_date(r[1].get("date") or ""),
+        reverse=True,
+    )[:count]
+    cards = "\n".join(review_mini_card(slug, meta) for slug, meta, _ in items)
+    return f"""<aside class="section-aside" aria-label="Recent book reviews">
+ <h2>Recent Book Reviews</h2>
+ <p style="font-size:0.85rem; color:#555; margin-bottom:12px;">Honest, editor-vetted reviews from our reviews desk.</p>
+{cards}
+ <a href="/reviews/" class="see-all-link">See all reviews →</a>
+</aside>"""
+
+
+# ── Related-content strip (used at bottom of individual review/newsletter pages) ────
+def related_strip_html(items: list[tuple[str, str, str]], item_kind: str) -> str:
+    """Return a 3-column strip of related content cards.
+
+    items: list of (slug, title, summary) tuples.
+    item_kind: "newsletter" or "review" — controls the link target.
+    """
+    if not items:
+        return ""
+    cards = "\n".join(
+        f"""<div class="related-strip-card">
+ <div class="related-strip-card__meta">Daily Reading Signal</div>
+ <h3 class="related-strip-card__title"><a href="/{item_kind}s/{slug}/">{title}</a></h3>
+ <p class="related-strip-card__summary">{summary}</p>
+</div>"""
+        for slug, title, summary in items
+    )
+    return f"""<section class="related-strip" aria-label="Related reading">
+ <h2>Related reading</h2>
+ <div class="related-strip-grid">
+{cards}
+ </div>
+</section>"""
 
 
 # ── Newsletter Page HTML (individual newsletter) ──────────────────────────────
@@ -1702,6 +1820,39 @@ def generate_newsletter_page(slug: str, meta: dict, body: str) -> str:
     content   = newsletter_page_html(slug, meta, body_html)
     title = meta.get("title", slug)
     desc  = meta.get("summary", f"Bithues Daily Reading Signal: {title}")
+
+    # 2026-08-08 INTERNAL LINKING FIX (class-7 cross-site-bug-ledger):
+    # Append a "Recent book reviews" strip to each newsletter page. Each
+    # newsletter page becomes a cross-link target for the reviews desk, and
+    # each review sees an inbound citation from the newsletter. This is the
+    # spoke-to-spoke cross-link that hardens the editorial pipeline in
+    # Google's topic-clustering.
+    all_reviews = load_md_dir(REVIEWS_DIR)
+    all_reviews.sort(key=lambda r: _parse_sort_date(r[1].get("date") or ""), reverse=True)
+    related = []
+    for r_slug, r_meta, _ in all_reviews:
+        if r_slug == "index" or r_slug == slug:
+            continue
+        related.append((r_slug, r_meta.get("title", r_slug), truncate_words(r_meta.get("summary", ""), 100), r_meta.get("genre_label") or "Book Review"))
+        if len(related) >= 3:
+            break
+    if related:
+        cards = "\n".join(
+            f"""<div class="related-strip-card">
+ <div class="related-strip-card__meta">{r_genre}</div>
+ <h3 class="related-strip-card__title"><a href="/reviews/{r_slug}/">{r_title}</a></h3>
+ <p class="related-strip-card__summary">{r_summary}</p>
+</div>"""
+            for r_slug, r_title, r_summary, r_genre in related
+        )
+        content += f"""<section class="related-strip" aria-label="Recent book reviews">
+ <h2>Recent book reviews</h2>
+ <div class="related-strip-grid">
+{cards}
+ </div>
+ <p style="margin-top:16px;"><a href="/reviews/" class="see-all-link" style="font-size:0.95rem;">See all reviews →</a></p>
+</section>"""
+
     return wrap_in_template(
         f"{title}",
         desc,
@@ -1865,6 +2016,65 @@ def generate_newsletters_listing(all_newsletters: list[tuple[str, dict, str]]) -
  {final_form}
 </section>"""
 
+    # ── Step 7: Trending this week (NEW 2026-08-07 — Mike directive: surface trending books)
+    # Reads .openclaw/tmp/bithues-trending-cache.json. If missing, section is omitted silently.
+    # Adds internal cross-promotion to reviews/ when a Bithues review exists for a trending title.
+    trending_block = ""
+    try:
+        trending_cache_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))),
+            ".openclaw", "tmp", "bithues-trending-cache.json"
+        )
+        if os.path.exists(trending_cache_path):
+            with open(trending_cache_path) as _tf:
+                _tdata = json.loads(_tf.read())
+            _trending_books = _tdata.get("trending_books", [])
+            _trending_themes = _tdata.get("themes_observed", [])
+            _date_researched = _tdata.get("date_researched", "")
+            # Cross-reference trending books against review library
+            _review_dir = REVIEWS_DIR
+            _bithues_reviews = {}
+            for _rf in _review_dir.glob("*.md"):
+                _rtxt = _rf.read_text()
+                _tm = re.search(r'^title:\s*["\'\u201c](.+?)["\'\u201d]', _rtxt, re.M)
+                if _tm:
+                    _bithues_reviews[_tm.group(1).lower()] = _rf.stem
+            _trending_cards = []
+            for _book in _trending_books[:6]:  # cap at 6 cards to keep section tight
+                _btitle = _book.get("title", "")
+                _bauthor = _book.get("author", "")
+                _burl = _book.get("amazon_url", "#")
+                _bsource = _book.get("source", "")
+                # Internal cross-link if Bithues has a review
+                _review_link_html = ""
+                _bkey = _btitle.lower()
+                for _rkey, _rslug in _bithues_reviews.items():
+                    if _rkey in _bkey or _bkey in _rkey:
+                        _review_link_html = f' <a class="nl-trending__review-link" href="/reviews/{_rslug}/">Read our review &rarr;</a>'
+                        break
+                _why = _book.get("why_trending", "")
+                _trending_cards.append(f"""<article class="nl-trending__card">
+ <div class="nl-trending__source">{_bsource}</div>
+ <h3 class="nl-trending__title"><a href="{_burl}" rel="nofollow sponsored">{_btitle}</a><span class="nl-trending__author"> &mdash; {_bauthor}</span></h3>
+ <p class="nl-trending__why">{_why}</p>{_review_link_html}
+</article>""")
+            _themes_html = ""
+            if _trending_themes:
+                _themes_html = '<ul class="nl-trending__themes">' + "".join(f"<li>{t}</li>" for t in _trending_themes[:4]) + "</ul>"
+            if _trending_cards:
+                trending_block = f"""<section class="nl-trending" aria-label="Trending this week">
+ <div class="nl-trending__header">
+  <h2 class="nl-trending__heading">What we are watching this week</h2>
+  <p class="nl-trending__sub">Trending books, prizes, and literary conversations as of {_date_researched}. Updated daily from bestseller lists, prize cycles, and the Bithues editorial desk.</p>
+ </div>
+ <div class="nl-trending-grid">
+{''.join(_trending_cards)}
+ </div>
+{_themes_html}
+</section>"""
+    except Exception as _trend_err:
+        trending_block = ""  # silent fail — section is optional, never break the build
+
     main = f"""<section class="page-hero">
  <h1>Daily Reading Signal</h1>
  <p class="page-hero__lede">A literary morning note that names the reading condition of the moment and tells you which books belong inside it. Sent daily at 5:45 AM ET.</p>
@@ -1874,6 +2084,34 @@ def generate_newsletters_listing(all_newsletters: list[tuple[str, dict, str]]) -
 {benefit_blocks}
 {sample_block}
 {editorial_standards}
+{trending_block}
+
+<!-- 2026-08-08 INTERNAL LINKING FIX (class-7 cross-site-bug-ledger): cross-link /newsletters/ to /reviews/.
+     /newsletters/ is unindexed; cross-linking from it to /reviews/ (indexed pages)
+     reinforces the editorial pipeline breadth AND helps Google's topic-clustering
+     understand that the newsletter and reviews are part of the same content graph. -->
+<section class="related-strip" aria-label="Browse book reviews">
+ <h2>Browse book reviews</h2>
+ <p style="font-size:0.95rem; color:#555; margin-bottom:16px;">Every book in the newsletter has a full review. Browse the reviews desk by genre, length, or mood.</p>
+ <div class="related-strip-grid">
+  <div class="related-strip-card">
+   <div class="related-strip-card__meta">Prehistorical Fiction</div>
+   <h3 class="related-strip-card__title"><a href="/reviews/beyond-the-leaning-trees/">Beyond the Leaning Trees</a></h3>
+   <p class="related-strip-card__summary">A thoughtful prehistoric survival novella about a young hunter-gatherer who crosses the boundary of the leaning trees.</p>
+  </div>
+  <div class="related-strip-card">
+   <div class="related-strip-card__meta">Science Fiction</div>
+   <h3 class="related-strip-card__title"><a href="/reviews/first-contact-diary/">First Contact Diary</a></h3>
+   <p class="related-strip-card__summary">A luminous first-contact novel as intimate as a journal and as vast as the night sky.</p>
+  </div>
+  <div class="related-strip-card">
+   <div class="related-strip-card__meta">Hard Science Fiction</div>
+   <h3 class="related-strip-card__title"><a href="/reviews/the-martian/">The Martian</a></h3>
+   <p class="related-strip-card__summary">When Mark Watney wakes alone on Mars with six months of food, he must become an engineer of his own survival.</p>
+  </div>
+ </div>
+ <p style="margin-top:16px;"><a href="/reviews/" class="see-all-link" style="font-size:0.95rem;">See all reviews →</a></p>
+</section>
 
 <section class="nl-archive" aria-label="Newsletter archive">
  <h2>The archive</h2>
@@ -1994,6 +2232,31 @@ def generate_index(all_stories: list[tuple[str, dict, str]]) -> str:
     more_articles = [a for a in articles if a[0] not in used_slugs and a[0] != 'index'][:3]
     more_reviews  = [r for r in reviews if r[0] not in used_slugs][:6]
 
+    # ── 2026-08-08 INTERNAL LINKING FIX (class-7 cross-site-bug-ledger) ──────────
+    # Load 4 most recent newsletters for a 4-column "Daily Reading Signal" strip
+    # below the 3-col section. The homepage is the highest-priority crawl path
+    # on the site; cross-linking from it to /newsletters/ spokes is the single
+    # highest-leverage change for getting /newsletters/ indexed. Each card uses
+    # the standard newsletter_card() component so visual style matches.
+    nl_items = load_md_dir(NEWSLETTERS_DIR) if NEWSLETTERS_DIR.exists() else []
+    nl_items.sort(key=lambda n: _parse_sort_date(n[1].get("date") or ""), reverse=True)
+    more_newsletters = [n for n in nl_items if n[0] != "index"][:4]
+
+    newsletter_strip_html = (
+        '<section>\n<div class="section-four-col">\n'
+
+        '<div class="section-col">\n'
+        '<div class="section-header">'
+        '<h2>DAILY READING SIGNAL</h2>'
+        '<a href="/newsletters/" class="explore-link">All issues &#8594;</a>'
+        '</div>\n'
+        + '\n'.join(newsletter_card(n_slug, n_meta, i)
+                    for i, (n_slug, n_meta, _) in enumerate(more_newsletters))
+        + '\n</div>\n'
+
+        '</div>\n</section>'
+    )
+
     sections_html = (
         '<section>\n<div class="section-three-col">\n'
 
@@ -2026,7 +2289,7 @@ def generate_index(all_stories: list[tuple[str, dict, str]]) -> str:
         + '\n</div>\n'
 
         '</div>\n</section>'
-    )
+    ) + '\n\n' + newsletter_strip_html
 
     return wrap_in_template(
         "Bithues — Book Reviews, Reading Guides & Original Stories",
@@ -2193,6 +2456,34 @@ def generate_review_page(slug: str, meta: dict, body: str,
     content   = review_page_html(slug, meta, body_html,
                                   prev_slug, prev_title,
                                   next_slug, next_title)
+
+    # 2026-08-08 INTERNAL LINKING FIX (class-7 cross-site-bug-ledger):
+    # Append a "Recent newsletters" strip below the review body. Each individual
+    # review page becomes a cross-link target for the Daily Reading Signal, and
+    # the newsletter sees its citation-graph grow per review. This is the spoke-
+    # to-spoke cross-link that hardens the relationship between reviews and
+    # newsletters in Google's topic-clustering.
+    nl_items = load_md_dir(NEWSLETTERS_DIR) if NEWSLETTERS_DIR.exists() else []
+    nl_items.sort(key=lambda n: _parse_sort_date(n[1].get("date") or ""), reverse=True)
+    related = [(n_slug, n_meta.get("title", n_slug), truncate_words(n_meta.get("summary", ""), 100))
+               for n_slug, n_meta, _ in nl_items[:3] if n_slug != "index"]
+    if related:
+        cards = "\n".join(
+            f"""<div class="related-strip-card">
+ <div class="related-strip-card__meta">Daily Reading Signal</div>
+ <h3 class="related-strip-card__title"><a href="/newsletters/{r_slug}/">{r_title}</a></h3>
+ <p class="related-strip-card__summary">{r_summary}</p>
+</div>"""
+            for r_slug, r_title, r_summary in related
+        )
+        content += f"""<section class="related-strip" aria-label="Recent newsletters">
+ <h2>Recent from the Daily Reading Signal</h2>
+ <div class="related-strip-grid">
+{cards}
+ </div>
+ <p style="margin-top:16px;"><a href="/newsletters/" class="see-all-link" style="font-size:0.95rem;">See all issues →</a></p>
+</section>"""
+
     return wrap_in_template(f"{page_title}", desc, content, "reviews", canonical_path=f"/reviews/{slug}/", meta=meta, schema_type="review")
 
 
