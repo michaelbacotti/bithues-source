@@ -4,7 +4,7 @@
 **Owner:** Mike
 **Trigger date for possible start:** Monday 2026-07-27
 **Subdomain candidates:** `weather.bithues.com`, `radar.bithues.com`, `climate.bithues.com`
-**Associated site:** bithues.com (michaelbacoti/bithues-rebuild — Cloudflare Pages)
+**Associated site:** bithues.com (michaelbacotti/bithues-rebuild — Cloudflare Pages)
 
 ## Concept
 
