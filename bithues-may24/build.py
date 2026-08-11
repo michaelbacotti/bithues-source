@@ -2252,13 +2252,14 @@ def generate_index(all_stories: list[tuple[str, dict, str]]) -> str:
     more_newsletters = [n for n in nl_items if n[0] != "index"][:4]
 
     newsletter_strip_html = (
-        '<section>\n<div class="section-four-col">\n'
+        '<section>\n<div class="newsletter-grid-wrapper">\n'
 
-        '<div class="section-col">\n'
         '<div class="section-header">'
         '<h2>DAILY READING SIGNAL</h2>'
         '<a href="/newsletters/" class="explore-link">All issues &#8594;</a>'
         '</div>\n'
+
+        '<div class="newsletter-grid">\n'
         + '\n'.join(newsletter_card(n_slug, n_meta, i)
                     for i, (n_slug, n_meta, _) in enumerate(more_newsletters))
         + '\n</div>\n'
