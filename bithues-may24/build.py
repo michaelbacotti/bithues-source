@@ -2808,6 +2808,43 @@ def generate_legal(page: str) -> str:
         f"{title_s} — Bithues.", main, canonical_path=f"/{page.lower()}")
 
 
+# ── Reading Maps page ─────────────────────────────────────────────────────────
+def generate_reading_maps() -> str:
+    """Load content/reading-maps.md and render it as a standalone page at /reading-maps/.
+
+    The MD file uses page_type: reading-maps in frontmatter.
+    Output: OUTPUT_DIR/reading-maps/index.html
+    """
+    rm_path = Path(__file__).parent.parent / "content" / "reading-maps.md"
+    if not rm_path.exists():
+        return ""
+
+    raw = rm_path.read_text(encoding="utf-8")
+    meta, body = parse_front_matter(raw)
+    body_html = md_to_html(body, meta)
+
+    title = meta.get("title", "Reading Maps")
+    desc  = meta.get("summary", "Curated paths through books, sequenced deliberately.")
+
+    main = f"""<div class="story-page">
+ <header class="content-header">
+  <div class="content-header-inner">
+   <span class="tag tag--article">Lists</span>
+   <h1 class="content-title">{title}</h1>
+  </div>
+ </header>
+ <div class="content-body" style="max-width:800px;margin:0 auto;padding:0 1rem;">
+  <div class="article-body" style="font-size:1.05rem;line-height:1.8;color:var(--text);">
+   {body_html}
+  </div>
+ </div>
+ {ADSENSE_BLOCK_HORIZONTAL}
+</div>"""
+
+    return wrap_in_template(title, desc, main, active_nav="reading-maps",
+                            canonical_path="/reading-maps/", meta=meta)
+
+
 # ── Sitemap ─────────────────────────────────────────────────────────────────────
 # Bithues canonicalizes to the bare domain (https://bithues.com/) on every page
 # (see BASE_URL above). The sitemap must agree, or GSC flags "sitemap vs canonical
@@ -2848,6 +2885,7 @@ def generate_sitemap(stories: list, articles: list, reviews: list, newsletters: 
         "/privacy/",
         "/terms/",
         "/best/",
+        "/reading-maps/",
     ]
     for path in static:
         urls.append((f"{SITEMAP_BASE}{path}", today))
@@ -3102,6 +3140,14 @@ def main():
     (OUTPUT_DIR / "terms").mkdir(exist_ok=True)
     (OUTPUT_DIR / "terms/index.html").write_text(generate_legal("terms"), encoding="utf-8")
     print("  Wrote static pages (about, contact, privacy, terms)")
+
+    # ── Reading Maps ─────────────────────────────────────────────────────────
+    rm_html = generate_reading_maps()
+    if rm_html:
+        rm_dir = OUTPUT_DIR / "reading-maps"
+        rm_dir.mkdir(exist_ok=True)
+        (rm_dir / "index.html").write_text(rm_html, encoding="utf-8")
+        print("  Wrote reading-maps/index.html")
 
     # ── Sitemap ───────────────────────────────────────────────────────────────
     sitemap_xml = generate_sitemap(stories, articles, reviews, newsletters)
