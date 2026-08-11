@@ -415,7 +415,7 @@ def _abs_image(path_or_url: str) -> str:
 def _adsense_horizontal() -> str:
     return """<div style="max-width:680px;margin:32px auto 0;padding:0 24px;">
  <div style="font-size:.75rem;color:#666;margin-bottom:4px;">Advertisement</div>
- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9312870448453345" data-ad-slot="1216992329" data-ad-format="auto" data-full-width-responsive="true"></ins>
+ <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9312870448453345" data-ad-slot="7590828986" data-ad-format="auto" data-full-width-responsive="true"></ins>
  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>"""
 

@@ -759,13 +759,13 @@ ADSENSE_BLOCK = """<div class="adsense-block">
 
 ADSENSE_BLOCK_SQUARE = """<div class="adsense-block adsense-block--square">
   <div class="adsense-block__label">Advertisement</div>
-  <ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-9312870448453345" data-ad-slot="1328672966" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-9312870448453345" data-ad-slot="7590828986" data-ad-format="auto" data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>"""
 
 ADSENSE_BLOCK_HORIZONTAL = """<div style="margin:2.5rem 0;padding:1rem;background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);text-align:center;">
   <div style="font-size:.75rem;color:#666;margin-bottom:6px;">Advertisement</div>
-  <ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-9312870448453345" data-ad-slot="1216992329" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-9312870448453345" data-ad-slot="7590828986" data-ad-format="auto" data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>"""
 
