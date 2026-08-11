@@ -751,6 +751,15 @@ SHARE_BAR_MINI = """<div class="share-bar share-bar-mini">
 </div>
 """
 
+# AdSense slot trio (per 2026-08-11 doctrine: 3 slots per page = AdSense-best-practice).
+# All three slots belong to the same publisher account (ca-pub-9312870448453345).
+# 1328672966 = fixed 336x280 medium-rectangle, succession's primary
+# 7590828986 = responsive auto, the original bithues slot
+# 1216992329 = responsive auto, alternate format for rotation
+ADSENSE_SLOT_FIXED = "1328672966"   # 336x280 medium rectangle
+ADSENSE_SLOT_RESPONSIVE = "7590828986"  # responsive auto (bithues original)
+ADSENSE_SLOT_RESPONSIVE_ALT = "1216992329"  # responsive auto (alternate)
+
 ADSENSE_BLOCK = """<div class="adsense-block">
   <div class="adsense-block__label">Advertisement</div>
   <ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-9312870448453345" data-ad-slot="7590828986" data-ad-format="auto" data-full-width-responsive="true"></ins>
@@ -759,13 +768,13 @@ ADSENSE_BLOCK = """<div class="adsense-block">
 
 ADSENSE_BLOCK_SQUARE = """<div class="adsense-block adsense-block--square">
   <div class="adsense-block__label">Advertisement</div>
-  <ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-9312870448453345" data-ad-slot="7590828986" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-9312870448453345" data-ad-slot="1328672966"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>"""
 
 ADSENSE_BLOCK_HORIZONTAL = """<div style="margin:2.5rem 0;padding:1rem;background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow);text-align:center;">
   <div style="font-size:.75rem;color:#666;margin-bottom:6px;">Advertisement</div>
-  <ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-9312870448453345" data-ad-slot="7590828986" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="ca-pub-9312870448453345" data-ad-slot="1216992329" data-ad-format="auto" data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>"""
 
