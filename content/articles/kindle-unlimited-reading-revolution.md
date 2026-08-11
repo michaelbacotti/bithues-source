@@ -51,7 +51,7 @@ Traditional publishing has always been shaped by scarcity: limited shelf space, 
 
 When scarcity fades, curiosity expands to fill the space.
 
-<!-- adsense:vertical -->
+<!-- adsense:square -->
 
 ---
 
@@ -97,7 +97,7 @@ Data-minded writers have started designing stories that respect this equation. T
 
 This is not cynicism; it is craft with a feedback loop. It forces an old question—"How do I keep someone reading?"—to be answered with new tools and a clearer set of incentives.
 
-<!-- adsense:vertical -->
+<!-- adsense:horizontal -->
 
 ---
 
