@@ -121,9 +121,9 @@ The common thread is ambition. None of these books treat magic as a distraction 
 
 If this list opens the door, you can keep going:
 
-- [Fantasy for Beginners](https://www.bithues.com/articles/fantasy-for-beginners)
-- [Complete Fantasy Encyclopedia](https://www.bithues.com/articles/complete-fantasy-encyclopedia)
-- [High Fantasy Reading Order Guide](https://www.bithues.com/articles/reading-order-guide-high-fantasy)
-- [Browse Fantasy Reviews](https://www.bithues.com/reviews/)
+- [Fantasy for Beginners](/articles/fantasy-for-beginners)
+- [Complete Fantasy Encyclopedia](/articles/complete-fantasy-encyclopedia)
+- [High Fantasy Reading Order Guide](/articles/reading-order-guide-high-fantasy)
+- [Browse Fantasy Reviews](/reviews/)
 
 The best fantasy does not ask you to leave the real world behind. It asks you to return to it with new symbols, sharper questions, and a slightly altered sense of what might be possible.

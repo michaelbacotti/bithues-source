@@ -4,10 +4,16 @@
 # ============================================================
 
 # ── Host normalization: force www → bare (canonical host) ──
-# Canonical tags and sitemap both point at https://bithues.com/ (bare).
-# Without this, Google sees www.bithues.com as a duplicate and picks it as
-# the canonical, mismatching our declared canonical. 301 the www version
-# to bare on every URL.
+# The CRYPTO site (bithues.com, www.bithues.com) owns the apex and runs this
+# host rule from projects/bithues-crypto/website/_redirects.
+#
+# This file is the BOOKS project (books.bithues.com only). Its canonical host
+# is https://books.bithues.com/ and its sitemap agrees (see SITEMAP_BASE in
+# build.py). The apex bithues.com belongs to the crypto project — do not point
+# books canonicals or redirects at it.
+#
+# Kept for parity with the crypto project: a request arriving on www is
+# normalized to the bare apex, which is the crypto host, not the books host.
 https://www.bithues.com/* https://bithues.com/:splat 301!
 
 # ── Root-level static pages ──

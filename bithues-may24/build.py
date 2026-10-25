@@ -34,7 +34,7 @@ TEMPLATE_DIR    = Path(__file__).parent
 
 PAGINATE       = 9999  # all on one page — pagination removed 2026-06-01
 REVIEWS_PAGINATE = 50   # reviews per listing page — keep high so genre filter sees all
-BASE_URL       = "https://bithues.com"
+BASE_URL       = "https://books.bithues.com"
 PAGE_THRESHOLD = 2000  # word count → split into pages
 CHUNK_SIZE     = 1500  # target words per page
 
@@ -2532,12 +2532,12 @@ def generate_about() -> str:
         {
             "name":  "Marcus Cole",
             "role":  "Sci-fi, fantasy, world-building",
-            "blurb": "Hard SF, space opera, fantasy, horror, and the places where speculative metaphysics meets narrative architecture. Comes from game design, takes craft seriously.",
+            "blurb": "Hard SF, space opera, fantasy, horror, and the places where speculative metaphysics meets narrative architecture.",
         },
         {
             "name":  "Julian Cross",
-            "role":  "Editorial lead, cultural criticism, essays",
-            "blurb": "Coordinates the editorial calendar across the desk and writes long-form essays on books, culture, and the publishing industry. Previously wrote for Rolling Stone and The Baffler; maintains a Substack with about 8,000 readers.",
+            "role":  "Cultural criticism, essays",
+            "blurb": "Cultural criticism, political and social analysis, UAP and philosophical nonfiction, climate and cultural essays, and the publishing industry.",
         },
         {
             "name":  "Sarah Voss",
@@ -2557,7 +2557,7 @@ def generate_about() -> str:
         {
             "name":  "Priya Mehta",
             "role":  "Literary speculative fiction",
-            "blurb": "Former astrophysicist. Reviews philosophical SF, weird fiction, literary horror, magical realism, slipstream, and contemplative science fiction.",
+            "blurb": "Philosophical SF, weird fiction, literary horror, magical realism, slipstream, and contemplative science fiction.",
         },
     ]
 
@@ -2577,11 +2577,7 @@ def generate_about() -> str:
 <div class="page-content">
  <div class="about-body">
 {ADSENSE_BLOCK_SQUARE}
-  <p><strong>Bithues</strong> is an independent book review site and short fiction publisher. We write honest, long-form reviews of books we think are worth your time — fiction, nonfiction, sci-fi, fantasy, and everything in between — and we publish original short fiction from working writers. The site launched in <strong>March 2024</strong> and has published roughly 50 book reviews, 40+ short stories, and 60+ essays and roundups, each one read and edited by a person on the masthead below.</p>
-
-  <h2>Editorial lead: Julian Cross</h2>
-  <p>Bithues is edited by <strong>Julian Cross</strong>, who oversees the editorial calendar and writes the site's long-form essays and cultural criticism. Julian is a journalist who previously wrote for <em>Rolling Stone</em> and <em>The Baffler</em>, and who maintains a Substack with about 8,000 subscribers. He coordinates the seven editors on the masthead, decides the final editorial direction of the site, and writes the pieces that don't fit neatly into any one genre. Julian's coverage area is cultural criticism and essays — the books that sit at the intersection of literature and the rest of the world.</p>
-  <p>If you want to know who is responsible for a particular review or article, every page on Bithues is signed by the editor who wrote it. If you want to reach Julian directly about editorial matters, you can email <a href="mailto:editor@bithues.com">editor@bithues.com</a>.</p>
+  <p><strong>Bithues</strong> is an independent book review site and short fiction publisher. We write honest, long-form reviews of books we think are worth your time — fiction, nonfiction, sci-fi, fantasy, and everything in between — and we publish original short fiction from working writers. The site launched in <strong>March 2024</strong> and has published roughly 50 book reviews, 40+ short stories, and 60+ essays and roundups, each one read and edited by a member of the editorial desk.</p>
 
   <h2>How we pick what to review</h2>
   <p>The short version: we read what interests us, and we write about what we think will interest you. The longer version is below.</p>
@@ -2610,12 +2606,20 @@ def generate_about() -> str:
   <p>There are several ways to reach us, depending on what you want to talk about:</p>
   <ul>
    <li><strong>General inquiries:</strong> <a href="mailto:info@bithues.com">info@bithues.com</a> &mdash; reader letters, partnerships, and "where do I start" questions.</li>
-   <li><strong>Editorial matters:</strong> <a href="mailto:editor@bithues.com">editor@bithues.com</a> &mdash; addressed to Julian Cross, the editorial lead.</li>
+   <li><strong>Editorial matters:</strong> <a href="mailto:editor@bithues.com">editor@bithues.com</a> &mdash; addressed to the Bithues Books editorial desk.</li>
    <li><strong>Corrections:</strong> <a href="mailto:corrections@bithues.com">corrections@bithues.com</a> &mdash; factual errors, broken links, and accessibility issues.</li>
    <li><strong>Submissions:</strong> <a href="mailto:submissions@bithues.com">submissions@bithues.com</a> &mdash; original short fiction, 1,000 to 12,000 words.</li>
    <li><strong>Review requests:</strong> <a href="mailto:reviews@bithues.com">reviews@bithues.com</a> &mdash; authors, publicists, and publishers.</li>
   </ul>
   <p>All inquiries are read by a person. Not all replies come immediately — but they come. Our average response time is under five business days for review requests and press, and under four weeks for fiction submissions.</p>
+
+  <div class="eeat-block">
+   <h2>About the Bithues Books editorial desk</h2>
+   <p>Bithues Books is published by the Bithues Books editorial desk — a small editorial collective that reads every book end-to-end before reviewing it. Reviews are written by editors with coverage-area expertise, then pass through a second editor for tone and accuracy before publication. The desk operates as a collective: coverage areas are assigned by topic, and editorial direction is coordinated across the desk rather than centralized in a single byline.</p>
+   <p>Editorial inquiries go to <a href="mailto:editor@bithues.com">editor@bithues.com</a>; factual corrections go to <a href="mailto:corrections@bithues.com">corrections@bithues.com</a>. We respond to factual corrections within five business days and post a dated correction note on the article when a substantive change is made. Reviews are not revised in response to disagreement with the take; corrections are made only when the take was based on a factual error that we missed.</p>
+   <p><strong>Affiliate disclosure.</strong> Bithues Books earns a small affiliate commission when readers purchase books through links on the site, at no extra cost to the reader. Our current program is Amazon Associates; the affiliate tag is applied to all book-purchase links. Editorial decisions are never influenced by affiliate revenue. Reviews carry a clear disclosure when a book was received as a galley, and receiving a galley does not obligate us to review the book or to review it positively.</p>
+   <p class="eeat-meta">Editor: Bithues Books Editorial Desk. Launched March 2024. Last reviewed: September 2026.</p>
+  </div>
 
   </div>
 </div>
@@ -2856,11 +2860,15 @@ def generate_reading_maps() -> str:
 
 
 # ── Sitemap ─────────────────────────────────────────────────────────────────────
-# Bithues canonicalizes to the bare domain (https://bithues.com/) on every page
+# The Books site canonicalizes to https://books.bithues.com/ on every page
 # (see BASE_URL above). The sitemap must agree, or GSC flags "sitemap vs canonical
-# mismatch" duplicate content. Force www → bare redirect at the _redirects level
-# so this matches the rest of the site.
-SITEMAP_BASE = "https://bithues.com"
+# mismatch" duplicate content.
+#
+# Host ownership (locked 2026-10-24): the apex bithues.com and www.bithues.com
+# belong to the CRYPTO project (crypto-bithues-rebuild). The Books project
+# (books-bithues-rebuild) owns books.bithues.com only. The two must never emit
+# each other's canonical host.
+SITEMAP_BASE = "https://books.bithues.com"
 
 def generate_sitemap(stories: list, articles: list, reviews: list, newsletters: list | None = None) -> str:
     """Return a valid XML sitemap string with all content pages.
