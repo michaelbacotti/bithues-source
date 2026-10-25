@@ -26,6 +26,13 @@ scrape_*.py
 SOP.md
 markdown-rules.md
 
+# --- Workdesk-local runtime dirs (NOT site source; this repo is PUBLIC) ---
+# website-manager/ = this desk's private long-term memory (workdesk-private, not site content)
+# wiki/ = a stale local copy; canonical wiki lives at ~/.openclaw/wiki/main/
+# Tracked in the workspace repo, not here. Keep them out of the public source repo.
+website-manager/
+wiki/
+
 # --- Backup files ---
 *.bak
 *~

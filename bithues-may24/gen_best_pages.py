@@ -34,7 +34,7 @@ from urllib.parse import quote
 # ── Configuration ──────────────────────────────────────────────────────────────
 CONTENT_DIR  = Path(__file__).parent.parent / "content"
 OUTPUT_DIR   = Path(__file__).parent
-BASE_URL     = "https://bithues.com"
+BASE_URL     = "https://books.bithues.com"
 ORG_ID       = f"{BASE_URL}/#organization"
 OG_IMAGE     = f"{BASE_URL}/og-image.jpg"
 

@@ -3,18 +3,20 @@
 # Fixes: 21 "Page with redirect" GSC errors + prevents duplicate content
 # ============================================================
 
-# ── Host normalization: force www → bare (canonical host) ──
-# The CRYPTO site (bithues.com, www.bithues.com) owns the apex and runs this
-# host rule from projects/bithues-crypto/website/_redirects.
+# ── Host normalization ──
+# The CRYPTO site (bithues.com, www.bithues.com) owns the apex AND the www
+# host. Its www → apex normalization rule lives in
+# projects/bithues-crypto/website/_redirects, where www.bithues.com is bound.
 #
 # This file is the BOOKS project (books.bithues.com only). Its canonical host
 # is https://books.bithues.com/ and its sitemap agrees (see SITEMAP_BASE in
-# build.py). The apex bithues.com belongs to the crypto project — do not point
-# books canonicals or redirects at it.
+# build.py). The apex bithues.com belongs to the crypto project.
 #
-# Kept for parity with the crypto project: a request arriving on www is
-# normalized to the bare apex, which is the crypto host, not the books host.
-https://www.bithues.com/* https://bithues.com/:splat 301!
+# There is deliberately NO www.bithues.com rule here. www.bithues.com is
+# served by the crypto Pages project, so a rule in this file could never
+# govern it — and if that binding ever changed, a rule redirecting www to the
+# crypto apex would silently pull books traffic to the crypto site.
+# Host separation is enforced by never referencing the apex from this project.
 
 # ── Root-level static pages ──
 # These pages are still .html files (build.py outputs them that way)
